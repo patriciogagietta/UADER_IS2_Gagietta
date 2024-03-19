@@ -33,6 +33,9 @@
     git commit -n carga_inicial
     git push origin
 ```
+
+![Ejemplo para actualizar el repositorio de github](https://i.imgur.com/xe8Kdu4.png)
+
 verifique la correcta actualización.
 
 - Simule el borrado “accidental” en su máquina y a continuación recupere el archivo desde el repositorio Github.
