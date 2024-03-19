@@ -10,7 +10,7 @@
 
 - 3 Pip3 (instalar desde [Python](https://www.python.org/))
 
-#### Obtenga una cuenta en www.github.com y a la que llamará UADER_IS2_{su_apellido}, a continuación genere una estructura de carpetas formada por:
+#### Obtenga una cuenta en [Github](https://github.com/) y a la que llamará UADER_IS2_{su_apellido}, a continuación genere una estructura de carpetas formada por:
 
 - src
 
