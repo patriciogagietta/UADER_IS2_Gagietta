@@ -21,12 +21,10 @@ def factorial(num):
         return fact 
 
 # para comprobar si paso los numeros minimo y maximo como argumento
-if len(sys.argv) < 3:
-    minimo = int(input("Numero minimo para calcular su factorial: "))
+if len(sys.argv) < 2:
     maximo = int(input("Numero maximo para calcular su factorial: "))
 else:
-    minimo = int(sys.argv[1])
-    maximo = int(sys.argv[2])
+    maximo = int(sys.argv[1])
 
-for i in range(minimo, maximo + 1):
+for i in range(1, maximo + 1):
     print("Factorial ",i,"! es ", factorial(i))
