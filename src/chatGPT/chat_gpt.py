@@ -29,6 +29,11 @@ while True:
         consulta = input("You: ")
 
         if consulta:
+            if consulta == "\033[A":         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
+                consulta = ultima_consulta
+            else:
+                ultima_consulta = consulta
+                
             try:
                 respuesta = respuesta_chat_gpt(consulta)
                 print("chatGPT:", respuesta)
