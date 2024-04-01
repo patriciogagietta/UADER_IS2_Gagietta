@@ -9,23 +9,32 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def respuesta_chat_gpt(consulta):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0125",
-        messages=[
-            {"role": "user", "content": consulta}
-        ],
-        temperature=1,
-        max_tokens=20
-    )
-    return response.choices[0].message.content
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-0125",
+            messages=[
+                {"role": "user", "content": consulta}
+            ],
+            temperature=1,
+            max_tokens=20
+        )
+
+        return response.choices[0].message.content
+    except ValueError as error:
+        print(error)
 
 
 while True:
-    consulta = input("You: ")
+    try:
+        consulta = input("You: ")
 
-    if consulta:
-        respuesta = respuesta_chat_gpt(consulta)
-
-        print("chatGPT:", respuesta)
-    else:
-        print("Por favor, ingresa una consulta válida.")
+        if consulta:
+            try:
+                respuesta = respuesta_chat_gpt(consulta)
+                print("chatGPT:", respuesta)
+            except ValueError as error:
+                print(error)
+        else:
+            print("ingresa una consulta válida")
+    except ValueError as error:
+        print(error)
