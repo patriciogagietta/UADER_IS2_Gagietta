@@ -25,6 +25,7 @@ def respuesta_chat_gpt(consulta):
         print(error)
 
 conversacion = False
+buffer = []
 
 if (len(sys.argv) > 1 and sys.argv[1] == "--convers"):
     conversacion = True
@@ -37,18 +38,34 @@ while True:
         consulta = input("You: ")
 
         if consulta:
-            if (consulta == "salir"):
-                break
-            elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
-                consulta = ultima_consulta
-            else:
-                ultima_consulta = consulta
-                
-            try:
-                respuesta = respuesta_chat_gpt(consulta)
-                print("chatGPT:", respuesta)
-            except ValueError as error:
-                print(error)
+            if conversacion:  # cuando esta en modo conversacion
+                if (consulta == "salir"):
+                    break
+                elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
+                    consulta = ultima_consulta
+                else:
+                    ultima_consulta = consulta
+                    buffer.append(ultima_consulta)
+                    
+                try:
+                    respuesta = respuesta_chat_gpt(consulta)
+                    print("chatGPT:", respuesta)
+                except ValueError as error:
+                    print(error)
+
+            else:  # cuando NO esta en modo conversacion
+                if (consulta == "salir"):
+                    break
+                elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
+                    consulta = ultima_consulta
+                else:
+                    ultima_consulta = consulta
+                    
+                try:
+                    respuesta = respuesta_chat_gpt(consulta)
+                    print("chatGPT:", respuesta)
+                except ValueError as error:
+                    print(error)
         else:
             print("ingresa una consulta válida")
     except ValueError as error:
