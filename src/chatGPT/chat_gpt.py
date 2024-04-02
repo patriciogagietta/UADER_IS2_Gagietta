@@ -48,7 +48,7 @@ while True:
                     buffer_messages.append({"role": "user", "content": ultima_consulta})
                 try:
                     respuesta = respuesta_chat_gpt()
-
+                    buffer_messages.append({"role": "assistant", "content": respuesta})
                     print("chatGPT:", respuesta)
                 except ValueError as error:
                     print(error)
