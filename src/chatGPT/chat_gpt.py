@@ -1,6 +1,7 @@
 import os
 import openai
 from dotenv import load_dotenv
+import sys
 
 # cargar las variables de entorno desde el archivo .env
 load_dotenv()
@@ -23,13 +24,22 @@ def respuesta_chat_gpt(consulta):
     except ValueError as error:
         print(error)
 
+conversacion = False
+
+if (len(sys.argv) > 1 and sys.argv[1] == "--convers"):
+    conversacion = True
+    print("MODO CONVERSACION")
+
+print("ingrese una consulta no vacia o ingrese 'salir' si quiere abandonar")
 
 while True:
     try:
         consulta = input("You: ")
 
         if consulta:
-            if consulta == "\033[A":         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
+            if (consulta == "salir"):
+                break
+            elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
                 consulta = ultima_consulta
             else:
                 ultima_consulta = consulta
