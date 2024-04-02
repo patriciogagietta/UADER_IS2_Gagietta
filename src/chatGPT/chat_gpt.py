@@ -9,15 +9,16 @@ load_dotenv()
 # configurar la apikey
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def respuesta_chat_gpt(consulta):
+role_system = {"role": "system","content": ""}
+buffer_messages = [role_system]
+
+def respuesta_chat_gpt():
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-0125",
-            messages=[
-                {"role": "user", "content": consulta}
-            ],
+            messages=buffer_messages,
             temperature=1,
-            max_tokens=20
+            max_tokens=50
         )
 
         return response.choices[0].message.content
@@ -25,7 +26,6 @@ def respuesta_chat_gpt(consulta):
         print(error)
 
 conversacion = False
-buffer = []
 
 if (len(sys.argv) > 1 and sys.argv[1] == "--convers"):
     conversacion = True
@@ -45,10 +45,10 @@ while True:
                     consulta = ultima_consulta
                 else:
                     ultima_consulta = consulta
-                    buffer.append(ultima_consulta)
-                    
+                    buffer_messages.append({"role": "user", "content": ultima_consulta})
                 try:
-                    respuesta = respuesta_chat_gpt(consulta)
+                    respuesta = respuesta_chat_gpt()
+
                     print("chatGPT:", respuesta)
                 except ValueError as error:
                     print(error)
@@ -60,9 +60,10 @@ while True:
                     consulta = ultima_consulta
                 else:
                     ultima_consulta = consulta
+                    buffer_messages = [role_system, {"role": "user", "content": ultima_consulta}]
                     
                 try:
-                    respuesta = respuesta_chat_gpt(consulta)
+                    respuesta = respuesta_chat_gpt()
                     print("chatGPT:", respuesta)
                 except ValueError as error:
                     print(error)
