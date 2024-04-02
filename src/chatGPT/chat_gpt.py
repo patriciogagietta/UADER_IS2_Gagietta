@@ -38,29 +38,24 @@ while True:
         consulta = input("You: ")
 
         if consulta:
+            ultima_consulta = consulta
+
+            if (consulta == "salir"):
+                break
+            elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
+                consulta = ultima_consulta
+
             if conversacion:  # cuando esta en modo conversacion
-                if (consulta == "salir"):
-                    break
-                elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
-                    consulta = ultima_consulta
-                else:
-                    ultima_consulta = consulta
-                    buffer_messages.append({"role": "user", "content": ultima_consulta})
+                buffer_messages.append({"role": "user", "content": consulta})
+
                 try:
                     respuesta = respuesta_chat_gpt()
-                    buffer_messages.append({"role": "assistant", "content": respuesta})
+                    buffer_messages.append({"role": "assistant", "content": respuesta})                                        
                     print("chatGPT:", respuesta)
                 except ValueError as error:
                     print(error)
-
             else:  # cuando NO esta en modo conversacion
-                if (consulta == "salir"):
-                    break
-                elif (consulta == "\033[A"):         # "\033[A" mover el cursor una linea para arriba con la flecha para arriba
-                    consulta = ultima_consulta
-                else:
-                    ultima_consulta = consulta
-                    buffer_messages = [role_system, {"role": "user", "content": ultima_consulta}]
+                buffer_messages = [role_system, {"role": "user", "content": consulta}]
                     
                 try:
                     respuesta = respuesta_chat_gpt()
