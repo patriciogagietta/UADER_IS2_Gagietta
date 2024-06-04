@@ -14,15 +14,21 @@ class SingletonMeta(type):
 class RecuperacionToken(metaclass=SingletonMeta):
 
     def recuperacion_token(self, jsonfile, jsonkey):
+        try:
+            with open(jsonfile, 'r') as myfile:
+                data = myfile.read()
+            obj = json.loads(data)
 
-        with open(jsonfile, 'r') as myfile:
-            data = myfile.read()
-        obj = json.loads(data)
-
-        print(str(obj[jsonkey]))
+            print(str(obj.get(jsonkey, "Token no encontrado")))                                 # Si encuentra el valor lo devuelve, sino devuelve que no lo encontro
+        except FileNotFoundError:                                                      # Se produce cuando se intenta acceder a un archivo que no existe
+            print("El archivo JSON no existe o lo ingreso de manera incorrecta")
 
 
 if __name__ == "__main__":
+
+    if len(sys.argv) < 2:
+        print("No ingreso como argumento el archivo JSON")
+        sys.exit(1)
 
     s1 = RecuperacionToken()
     s2 = RecuperacionToken()
