@@ -1,3 +1,9 @@
+"""
+
+Copyright UADERFCyT-IS2©2024 todos los derechos reservados
+
+
+"""
 import json, sys
 
 class SingletonMeta(type):
