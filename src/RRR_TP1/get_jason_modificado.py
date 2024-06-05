@@ -134,7 +134,7 @@ class pagosCollection(Iterable):
 
 
 if __name__ == "__main__":
-    VERSION = "Versión 1.1"
+    VERSION = "Versión 1.2"
 
     if len(sys.argv) < 2:
         print("No ingreso como argumento el archivo JSON")
