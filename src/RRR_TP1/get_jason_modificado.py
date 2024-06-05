@@ -6,7 +6,7 @@ Copyright UADERFCyT-IS2©2024 todos los derechos reservados
 """
 from __future__ import annotations
 from collections.abc import Iterable, Iterator
-from typing import Any, List, Dict
+from typing import Any, List
 
 import json
 import sys
@@ -43,17 +43,17 @@ class RecuperacionToken(metaclass=SingletonMeta):
             "token2": 2000
         }
         self.jsonfile = jsonfile
-        self.historial_pagos = pagosCollection()
+        self.historial_pagos = PagosCollection()
 
     def realizar_pago(self, monto, numero_pedido):
         for token in self.saldo:
             if self.saldo[token] >= monto:
                 self.saldo[token] -= monto
-                pago = {"Numero de pedido": numero_pedido, "Token": token, "Monto": monto}
-                self.historial_pagos.add_pago(pago)
+                pago_actual = {"Numero de pedido": numero_pedido, "Token": token, "Monto": monto}
+                self.historial_pagos.add_pago(pago_actual)
                 print(f"Pago {monto} desde el token '{token}'")
                 return
-            
+
         print(f"No hay saldo en ninguna cuenta para realizar el pago de ${monto}")
 
     def recuperacion_token(self):
@@ -77,9 +77,8 @@ class AlphabeticalOrderIterator(Iterator):
     """
     Los iteradores concretos implementan varios algoritmos transversales. estas clases
     memorizar en todo momento la posición de recorrido actual.
-    """
 
-    """
+
     El atributo `_position` almacena la posición transversal actual. Un iterador puede
     Tiene muchos otros campos para almacenar el estado de iteración, especialmente cuando
     se supone que funciona con un tipo particular de colección.
@@ -92,7 +91,7 @@ class AlphabeticalOrderIterator(Iterator):
     """
     _reverse: bool = False
 
-    def __init__(self, collection: pagosCollection, reverse: bool = False) -> None:
+    def __init__(self, collection: PagosCollection, reverse: bool = False) -> None:
         self._collection = collection
         self._reverse = reverse
         self._position = -1 if reverse else 0
@@ -111,7 +110,7 @@ class AlphabeticalOrderIterator(Iterator):
         return value
 
 
-class pagosCollection(Iterable):
+class PagosCollection(Iterable):
     """
     Las colecciones concretas proporcionan uno o varios métodos para recuperar material fresco.
     instancias de iterador, compatibles con la clase de colección.
@@ -160,10 +159,8 @@ if __name__ == "__main__":
         s1.realizar_pago(500, 5)
         s1.realizar_pago(500, 6)
         s1.realizar_pago(500, 7)
-        
+
         print()
         print("Historial de pagos:")
         for pago in s1.listado_pagos():
             print(pago)
-
-
