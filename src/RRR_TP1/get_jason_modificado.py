@@ -28,18 +28,35 @@ class SingletonMeta(type):
 
 
 class RecuperacionToken(metaclass=SingletonMeta):
-    """ Clase para la recuperación de tokens desde un archivo JSON 
+    """ 
+        Clase para la recuperación de tokens desde un archivo JSON 
         que implementa el patrón de creacion singleton para asegurar que solo exista una instancia.
     """
 
-    def recuperacion_token(self, jsonfile, jsonkey):
+    def __init__(self, jsonfile):
+        self.saldo = {
+            "token1": 1000,
+            "token2": 2000
+        }
+        self.jsonfile = jsonfile
+
+    def realizar_pago(self, monto):
+        for token in self.saldo:
+            if self.saldo[token] >= monto:
+                self.saldo[token] -= monto
+                print(f"Pago {monto} desde el token '{token}'")
+                return
+            
+        print(f"No hay saldo en ninguna cuenta para realizar el pago de ${monto}")
+
+    def recuperacion_token(self):
         try:
-            with open(jsonfile, 'r') as myfile:
+            with open(self.jsonfile, 'r') as myfile:
                 data = myfile.read()
             obj = json.loads(data)
 
             # Si encuentra el valor lo devuelve, sino devuelve que no lo encontro
-            print(str(obj.get(jsonkey, "Token no encontrado")))
+            return obj.get("token", "Token no encontrado")
         # Se produce cuando se intenta acceder a un archivo que no existe
         except FileNotFoundError:
             print("El archivo JSON no existe o lo ingreso de manera incorrecta")
@@ -56,15 +73,22 @@ if __name__ == "__main__":
         print(VERSION)
         print()
 
-    s1 = RecuperacionToken()
-    s2 = RecuperacionToken()
 
     JSONFILE = sys.argv[1]
 
-    if len(sys.argv) > 2:
-        JSONKEY = sys.argv[2]
-    else:
-        JSONKEY = "token1"
+    s1 = RecuperacionToken(JSONFILE)
+    s2 = RecuperacionToken(JSONFILE)
+
 
     if id(s1) == id(s2):
-        s1.recuperacion_token(JSONFILE,JSONKEY)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+        s1.realizar_pago(500)
+
+
