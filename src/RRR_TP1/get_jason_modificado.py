@@ -147,20 +147,16 @@ if __name__ == "__main__":
     JSONFILE = sys.argv[1]
 
     s1 = RecuperacionToken(JSONFILE)
-    s2 = RecuperacionToken(JSONFILE)
 
+    s1.realizar_pago(500, 1)
+    s1.realizar_pago(500, 2)
+    s1.realizar_pago(500, 3)
+    s1.realizar_pago(500, 4)
+    s1.realizar_pago(500, 5)
+    s1.realizar_pago(500, 6)
+    s1.realizar_pago(500, 7)
 
-    if id(s1) == id(s2):
-
-        s1.realizar_pago(500, 1)
-        s1.realizar_pago(500, 2)
-        s1.realizar_pago(500, 3)
-        s1.realizar_pago(500, 4)
-        s1.realizar_pago(500, 5)
-        s1.realizar_pago(500, 6)
-        s1.realizar_pago(500, 7)
-
-        print()
-        print("Historial de pagos:")
-        for pago in s1.listado_pagos():
-            print(pago)
+    print()
+    print("Historial de pagos:")
+    for pago in s1.listado_pagos():
+        print(pago)
